@@ -16,10 +16,34 @@ namespace MyContacts
             throw new NotImplementedException();
         }
 
-        public bool Insert(string name, string family, int Mobile, int Age, string Address)
+        public bool Insert(string name, string family, string Mobile, int Age, string Address)
         {
-            throw new NotImplementedException();
+            SqlConnection conn = new SqlConnection(connection);
+            try
+            {
+                string query = "Insert Into MyContacts (Name, Family, Mobile, Age, Address) values (@Name, @Family, @Mobile, @Age, @Address)";
+                SqlCommand command = new SqlCommand(query, conn);
+                command.Parameters.AddWithValue("@Name", name);
+                command.Parameters.AddWithValue("@Family", family);
+                command.Parameters.AddWithValue("@Mobile", Mobile);
+                command.Parameters.AddWithValue("@Age", Age);
+                command.Parameters.AddWithValue("@Address", Address);
+                conn.Open();
+                command.ExecuteNonQuery();
+                
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
+
 
         public DataTable SelectAll()
         {
@@ -37,7 +61,7 @@ namespace MyContacts
             throw new NotImplementedException();
         }
 
-        public bool Update(int ContactID, string name, string family, int Mobile, int Age, string Address)
+        public bool Update(int ContactID, string name, string family, string Mobile, int Age, string Address)
         {
             throw new NotImplementedException();
         }
